@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link rel='stylesheet' id='magz-style-css' href='~/Content/style.css' type='text/css' media='all' />
+    <link rel='stylesheet' id='swipemenu-css' href='~/Content/css/swipemenu.css' type='text/css' media='all' />
+    <link rel='stylesheet' id='flexslider-css' href='~/Content/css/flexslider.css' type='text/css' media='all' />
+    <link rel='stylesheet' id='bootstrap-css' href='~/Content/css/bootstrap.css' type='text/css' media='all' />
+    <link rel='stylesheet' id='bootstrap-responsive-css' href='~/Content/css/bootstrap-responsive.css' type='text/css' media='all' />
+    <link rel='stylesheet' id='simplyscroll-css' href='~/Content/css/jquery.simplyscroll.css' type='text/css' media='all' />
+    <link rel='stylesheet' id='jPages-css' href='~/Content/css/jPages.css' type='text/css' media='all' />
+    <link rel='stylesheet' id='rating-css' href='~/Content/css/jquery.rating.css' type='text/css' media='all' />
+    <link rel='stylesheet' id='ie-styles-css' href='~/Content/css/ie.css' type='text/css' media='all' />
+    <link rel='stylesheet' id='Roboto-css' href='http://fonts.googleapis.com/css?family=Roboto' type='text/css' media='all' />
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+    <script type='text/javascript' src="~/Content/js/jquery-1.10.2.min.js"></script>
+    <script type='text/javascript' src='~/Content/js/html5.js'></script>
+    <script type='text/javascript' src='~/Content/js/bootstrap.min.js'></script>
+    <script type='text/javascript' src='~/Content/js/jquery.flexslider.js'></script>
+    <script type='text/javascript' src='~/Content/js/jquery.flexslider.init.js'></script>
+    <script type='text/javascript' src='~/Content/js/jquery.bxslider.js'></script>
+    <script type='text/javascript' src='~/Content/js/jquery.bxslider.init.js'></script>
+    <script type='text/javascript' src='~/Content/js/jquery.rating.js'></script>
+    <script type='text/javascript' src='~/Content/js/jquery.idTabs.min.js'></script>
+    <script type='text/javascript' src='~/Content/js/jquery.simplyscroll.js'></script>
+    <script type='text/javascript' src='~/Content/js/fluidvids.min.js'></script>
+    <script type='text/javascript' src='~/Content/js/jPages.js'></script>
+    <script type='text/javascript' src='~/Content/js/jquery.sidr.min.js'></script>
+    <script type='text/javascript' src='~/Content/js/jquery.touchSwipe.min.js'></script>
+    <script type='text/javascript' src='~/Content/js/custom.js'></script>
+
+    @*@Scripts.Render("~/bundles/moment")*@
+</head>
+<body>
+
+    <div class="container">
+
+        <header id="header" class="container">
+            <div id="mast-head">
+                <div id="logo">
+                    <a href="~/" title="Magazine" rel="home"><img src="~/Content/images/logo.png" alt="Magazine" /></a>
+                </div>
+            </div>
+
+            <nav class="navbar navbar-inverse clearfix nobot">
+
+                <a id="responsive-menu-button" href="#swipe-menu">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+
+                <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
+                <div class="nav-collapse" id="swipe-menu-responsive">
+
+                    <ul class="nav">
+
+                        <li>
+                            <span id="close-menu">
+                                <a href="#" class="close-this-menu">Close</a>
+                                <script type="text/javascript">
+                                    jQuery('a.sidr-class-close-this-menu').click(function () {
+                                        jQuery('div.sidr').css({
+                                            'right': '-476px'
+                                        });
+                                        jQuery('body').css({
+                                            'right': '0'
+                                        });
+                                    });
+                                </script>
+                            </span>
+                        </li>
+
+                        <li><a href="~/"><img src="~/Content/images/home.png" alt="Magazine"></a></li>
+                        <li class="dropdown">
+                            <a href="~/">Home</a>
+                            <ul class="sub-menu">
+                                <li><a href="magazine2.html">Homepage 2</a></li>
+                                <li><a href="blog.html">Homepage 3</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        @{Html.RenderAction("MailboxCount", "Messages", new { });}
+                    </ul>
+                </div><!--/.nav-collapse -->
+                @Html.Partial("_LoginPartial_Magazine")
+            </nav><!-- /.navbar -->
+        </header><!-- #masthead -->
+    </div>
+    <div class="container body-content" style="background-color:white">
+
+        @RenderBody()
+        @RenderSection("Scripts", false)
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Couples Dating Scene - Orlando FL</p>
+        </footer>
+    </div>
+</body>
+</html>

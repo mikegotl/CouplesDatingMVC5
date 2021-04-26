@@ -1,0 +1,38 @@
+﻿@model IEnumerable<CoupleDating_MVC5.Models.Tag>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TagType.name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TagType.name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.tagID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.tagID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.tagID })
+        </td>
+    </tr>
+}
+</table>

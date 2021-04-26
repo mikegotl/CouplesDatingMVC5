@@ -1,0 +1,143 @@
+﻿@using CoupleDating_MVC5.Controllers
+@using CoupleDating_MVC5.Models
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="col-md-3">
+    @*NEWS*@
+    <div class="panel panel-info">
+        <div class="panel-heading">News</div>
+        <div class="panel-body">
+            @{
+                List<Article> articles = (List<Article>)ViewBag.articles;
+                foreach (Article a in articles)
+                {
+                    string imageUrl = a.ArticleExternalLinks.FirstOrDefault().ArticleExternalMedia.FirstOrDefault().Path;
+
+            <div class="media">
+                <a class="media-left" href="/Articles">
+                    <img src="@imageUrl" style="width:150px;" alt="...">
+                </a>
+                <div class="media-body">
+                    <a href="/Articles"><p class="media-heading">Marriage benefits to double-dating...</p></a>
+                </div>
+            </div>
+                }
+
+            }
+        </div>
+    </div>
+    @*EVENTS*@
+    <div class="panel panel-info">
+        <div class="panel-heading">Events</div>
+        <div class="panel-body">
+
+        </div>
+    </div>
+    @*INBOX*@
+    <div class="panel panel-info">
+        <div class="panel-heading">Inbox</div>
+        <div class="panel-body">
+        </div>
+    </div>
+    @*TOOLS*@
+    <div class="panel panel-info">
+        <div class="panel-heading">Tools/Research</div>
+        <div class="panel-body">
+        </div>
+    </div>
+</div>
+<div class="col-md-9">
+    @*RECENT COUPLES*@
+    <div class="panel panel-info">
+        <div class="panel-heading">Most Recent Couples</div>
+        <div class="panel-body">
+            @{Html.RenderAction("ListCouples", "Members", new { howMany = 3 });}
+            @*<span id="MostRecentCouples" />*@
+        </div>
+    </div>
+    <div class="clear-fix"></div>
+    @*RECENT PLACES*@
+    @*<div class="panel panel-info">
+        <div class="panel-heading">Local Places to Double-Date</div>
+        <div class="panel-body">
+            <span id="HomeRowGooglePlaces" />
+        </div>
+    </div>*@
+
+    <div id="Top_Places">
+        @{
+            var Config = new Config();
+            var _city = Config.LoggedInMember.City;
+            if (String.IsNullOrEmpty(_city))
+            {
+                _city = "Orlando";
+            }
+
+        }
+        <div class="partialContents" data-url="/PlacesAsync/ListPlaces?city=@_city&photoCat=@Request.QueryString["photoCat"]">
+            <div style="width:50px;">
+                <img src="~/Content/images/loader-blue.gif" width="100%" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div id="Recent_Couples" class="col-md-4">
+        <div class="panel panel-primary" style="">
+            <div class="panel-heading">Most Recent Couples</div>
+            <div class="panel-body">
+                @{Html.RenderAction("ListCouples", "Members", new { howMany = 3 });}
+            </div>
+            <div class="panel-footer">@Html.ActionLink("Show more couples", "Index", "Members")</div>
+        </div>
+
+        <div class="panel panel-info">
+            <div class="panel-heading">Your Forum</div>
+            <div class="panel-body">
+                @{
+                    List<Article> articles = (List<Article>)ViewBag.articles;
+                    foreach (Article a in articles)
+                    {
+                        string imageUrl = a.ArticleExternalLinks.FirstOrDefault().ArticleExternalMedia.FirstOrDefault().path;
+
+                        <div class="media">
+                            <a class="media-left" href="/Articles">
+                                <img src="@imageUrl" style="width:150px;" alt="...">
+                            </a>
+                            <div class="media-body">
+                                <a href="/Articles"><p class="media-heading">Marriage benefits to double-dating...</p></a>
+                            </div>
+                        </div>
+                    }
+
+                }
+            </div>
+        </div>
+    </div>*@
+
+
+
+<div class="clearfix"></div>
+
+@*<script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-59805477-1', 'auto');
+        ga('send', 'pageview');
+        ga('set', '&uid', {@Config.UID }); // Set the user ID using signed-in user_id.
+    </script>*@
+
+@section Scripts{
+    <script src="~/Scripts/Site.js"></script>
+    <script type="text/javascript">
+        RenderGPlacesHome(null, 'nightlife+in+', 20);
+    </script>
+}

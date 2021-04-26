@@ -1,0 +1,87 @@
+﻿@model CoupleDating_MVC5.Models.DoubleDateDetails
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>DoubleDateDetails</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.placeSequenceNbr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.placeSequenceNbr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.meetTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.meetTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.externalPlaceName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.externalPlaceName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.externalPlaceAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.externalPlaceAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.memo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.memo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.createDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.createDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DoubleDateRequest.memo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DoubleDateRequest.memo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Place.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Place.Name)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

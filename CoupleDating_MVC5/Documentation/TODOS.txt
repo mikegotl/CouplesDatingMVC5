@@ -1,0 +1,26 @@
+﻿------------------
+Web Application
+------------------
+
+Layout Page:
+
+	NavBar:
+		Advanced Search Link not working
+
+Home Page:
+
+	New layout: Couples(recent/featured), Places(nearby/featured), Event Calendar, News
+
+Profile Page:
+
+	Fix positioning
+	Upload Photos to online repo.  ??
+
+Advanced Search Page:
+
+	Test functionality
+
+Create The Date page:
+
+	Fix date/time picker
+

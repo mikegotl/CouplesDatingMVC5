@@ -1,0 +1,50 @@
+﻿@model IEnumerable<CoupleDating_MVC5.Models.Favorites>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.enabled)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Member.FirstName1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Member1.FirstName1)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateCreated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.enabled)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Member.FirstName1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Member1.FirstName1)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.favoriteID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.favoriteID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.favoriteID })
+        </td>
+    </tr>
+}
+</table>

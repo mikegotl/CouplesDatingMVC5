@@ -1,0 +1,47 @@
+﻿@model CoupleDating_MVC5.Models.QuestionChoices
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>QuestionChoices</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.questionChoiceFull)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.questionChoiceFull)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ordinal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ordinal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Questions.questionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Questions.questionName)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

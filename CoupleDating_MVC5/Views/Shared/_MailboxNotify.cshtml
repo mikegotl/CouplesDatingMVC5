@@ -1,0 +1,7 @@
+﻿@model CoupleDating_MVC5.Models.Messages
+
+@if (ViewBag.count > 0)
+{
+    string message = "New Mail (" + ViewBag.count + ")";
+    <li>@Html.ActionLink(message, "Index", "Messages")</li>
+}

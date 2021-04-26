@@ -1,0 +1,107 @@
+﻿@model IEnumerable<CoupleDating_MVC5.Models.CDSEvent>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.createdBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dateStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dateEnd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.createdOn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.modifiedOn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.modifiedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DoubleDateRequest.memo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventStatu.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventType.description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Group.name)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.createdBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dateStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dateEnd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.createdOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.modifiedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.modifiedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DoubleDateRequest.memo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventStatu.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventType.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Group.name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.eventID }) |
+                @Html.ActionLink("Details", "Details", new { id=item.eventID }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.eventID })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

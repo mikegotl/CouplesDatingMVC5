@@ -1,0 +1,63 @@
+﻿@model IEnumerable<CoupleDating_MVC5.Models.Member>
+@using CoupleDating_MVC5.Models
+
+Last Updated: @DateTime.Now.ToString("T")
+@foreach (Member item in Model)
+{
+    var path = item.MemberMedia.Count > 0 ? item.MemberMedia.FirstOrDefault().path : "";
+
+    <div class="col-md-3">
+        <div class="thumbnail">
+            <img  style="max-height:200px;" id="@item.ID" src="@path"/>
+            <div class="caption">
+                <h3>@item.ScreenName</h3>
+                <h4>@item.FirstName1 + @item.FirstName2</h4>
+                <p>Status: @item.MemberStatus.Description</p>
+                <p>Met In: @item.YearMet</p>
+                <p><a href="/members/details/@item.ID" class="btn btn-primary" role="button">View Details</a></p>
+            </div>
+        </div>
+    </div>
+
+
+
+    @*<div class="row">
+        <div class="col-md-4">
+            <a href="#">
+                @{
+    if (item.MemberMedia != null)
+    {
+        string imgPath;
+        var imgPathPrimary = item.MemberMedia.Where(p => p.primary == true).FirstOrDefault();
+
+        if (imgPathPrimary != null)
+        {
+            imgPath = imgPathPrimary.path;
+        }
+        else
+        {
+            var mmedia = item.MemberMedia.FirstOrDefault();
+            if (mmedia != null)
+            {
+                imgPath = mmedia.path;
+                <img src="@imgPath" class="img-responsive" />
+            }
+        }
+    }
+                }
+            </a>
+        </div>
+        <div class="col-md-7">
+            <a href="/members/details/@item.ID">
+                @Html.DisplayFor(modelItem => item.ScreenName)
+            </a>
+            <p>
+                @Html.DisplayFor(modelItem => item.FirstName1) and @Html.DisplayFor(modelItem => item.FirstName2)
+            </p>
+            <p>
+                @Html.DisplayFor(modelItem => item.Status.statusDescription) - Together since @Html.DisplayFor(modelItem => item.YearMet)
+            </p>
+        </div>
+    </div>*@
+
+}

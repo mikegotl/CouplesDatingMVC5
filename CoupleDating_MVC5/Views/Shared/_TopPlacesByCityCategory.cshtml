@@ -1,0 +1,70 @@
+﻿@using CoupleDating_MVC5.Controllers
+@using CoupleDating_MVC5.Models
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <!-- Single button -->
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                @{
+                    if (@ViewBag.photoCat != null)
+                    {
+                        <span>Top Places for @ViewBag.photoCat !</span>
+                    }
+                    else
+                    {
+                        <span>Top Places to Double Date!</span>
+                    }
+
+                }
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="?photoCat=Comedy" class="list-group-item">Comedy</a></li>
+                <li><a href="?photoCat=Art Gallery" class="list-group-item">Art Gallery</a></li>
+                <li><a href="?photoCat=Theatre" class="list-group-item">Night at the Theatre</a></li>
+                <li><a href="?photoCat=nightlife" class="list-group-item">Night Life!</a></li>
+                <li><a href="?photoCat=restaurants" class="list-group-item">A Restaurant Tour</a></li>
+                <li><a href="?photoCat=Movies" class="list-group-item">Movies with twist</a></li>
+                <li><a href="?photoCat=Parks" class="list-group-item">Park Exploration</a></li>
+                <li><a href="?photoCat=Boat Rentals" class="list-group-item">Rent a boat</a></li>
+            </ul>
+        </div>
+        Last Updated: @ViewBag.lastUpdated
+    </div>
+
+    <div class="panel-body">
+        <section id="pinBoot">
+            @{
+                List<GPlace> places = (List<GPlace>)ViewBag.places;
+
+                if (places != null)
+                {
+
+                    foreach (var place in places)
+                    {
+                        foreach (var pUrl in place.photoUrls)
+                        {
+
+                            if (!String.IsNullOrEmpty(pUrl.photoUrl))
+                            {
+
+                                <article class="white-panel">
+                                    <img src="@pUrl.photoUrl" class="img img-responsive" />
+                                    <a href="/places/details/@place.place_id">
+
+                                        <p><img src="@place.iconURL" style="vertical-align:middle; width:10px;" alt="@place.name" />@place.name</p>
+                                    </a>
+                                    <a href="@place.website_url">@place.website_url</a>
+                                </article>
+                            }
+
+                        }
+
+                    }
+
+                }
+            }
+        </section>
+    </div>
+</div>

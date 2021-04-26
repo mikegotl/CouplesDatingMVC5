@@ -1,0 +1,57 @@
+﻿@model IEnumerable<CoupleDating_MVC5.Models.Messages>
+
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Inbox</h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<table class="table table-striped table-hover table-responsive" style="background-color:white">
+    <tr>
+        <th></th>
+        <th>
+            From
+        </th>
+        <th>
+            Subject
+        </th>
+        <th>
+            Body
+        </th>
+        <th>
+            When
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @if (item.isRead != true)
+                {
+                    <img class="post-icon" alt="Text post" src="/content/images/text.png?timestamp=1417637847304">
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Member.ScreenName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.subject)
+            </td>
+            <td>
+                @Html.Raw(item.body)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dateCreated)
+            </td>
+            <td>
+                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                @Html.ActionLink("Read", "Details", new { id = item.messageID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.messageID })
+            </td>
+        </tr>
+    }
+</table>

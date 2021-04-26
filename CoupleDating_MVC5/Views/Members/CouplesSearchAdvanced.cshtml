@@ -1,0 +1,133 @@
+﻿@model IEnumerable<CoupleDating_MVC5.Models.Member>
+
+@{
+    ViewBag.Title = "CouplesSearchAdvanced";
+}
+<div class="box row">
+    <h1>Couples Search Advanced</h1>
+</div>
+<div class="row">
+    <div class="box col-md-6">
+        @using (Html.BeginForm("CouplesSearchAdvanced", "Members"))
+        {
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Screen Name Contains</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="screenName" name="screenName" value="@ViewBag.screenName" placeholder="Screen Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Adjust Age Range</label>
+                    <div class="col-sm-8">
+                        @{
+            if (ViewBag.ageRange != null)
+            {
+                <span id="SliderVal1">@ViewBag.ageRange</span>
+                            <br />
+                            <input id="ex2" type="text" name="sliderValue" class=" col-sm-8" value="" data-slider-min="21" data-slider-max="85" data-slider-step="1" data-slider-value="[@ViewBag.ageRange]" />
+                            <br />
+            }
+            else
+            {
+                <span id="SliderVal1">30,65</span>
+                            <br />
+                            <input id="ex2" type="text" name="sliderValue" class=" col-sm-8" value="" data-slider-min="21" data-slider-max="85" data-slider-step="1" data-slider-value="[30,65]" />
+                            <br />
+            }
+
+                        }
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Years Together (More Than)</label>
+                    <div class="col-sm-8">
+
+                        @{
+
+            if (ViewBag.yearsTogether >= 0)
+            {
+                <span id="SliderVal2">@ViewBag.yearsTogether</span>
+                            <br />
+                            <input id="ex3" type="text" name="yearsTogether" class="span2 col-sm-8" value="" data-slider-min="0" data-slider-max="85" data-slider-step="1" data-slider-value="@ViewBag.yearsTogether" />
+            }
+            else
+            {
+                <span id="SliderVal2">0</span>
+                            <br />
+                            <input id="ex3" type="text" name="yearsTogether" class="span2 col-sm-8" value="" data-slider-min="0" data-slider-max="85" data-slider-step="1" data-slider-value="1" />
+            }
+
+                        }
+
+                        <br />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="miles" class="col-sm-4 control-label">Distance less than (miles)</label>
+                    <div class="col-sm-8">
+                        @{
+            if (ViewBag.distance > 0)
+            {
+                <span id="SliderVal3">@ViewBag.distance</span>
+                            <br />
+                            <input id="ex4" type="text" name="distance" class=" col-sm-8" value="" data-slider-min="5" data-slider-max="1000" data-slider-step="10" data-slider-value="@ViewBag.distance" />
+                            <br />
+            }
+            else
+            {
+
+                <span id="SliderVal3">500</span>
+                            <br />
+                            <input id="ex4" type="text" name="distance" class=" col-sm-8" value="" data-slider-min="5" data-slider-max="1000" data-slider-step="10" data-slider-value="50" />
+                            <br />
+            }
+
+                        }
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Has Pics</label>
+                    <div class="col-sm-8">
+                        <input type="checkbox" id="hasPics" name="hasPics" checked="@ViewBag.hasPics" class="checkbox" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Genders in couple</label>
+                    <div class="col-sm-8">
+
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="M" checked="@ViewBag.isMale" name="M" class="checkbox" /> M
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="F" checked="@ViewBag.isFemale" name="F" class="checkbox" /> F
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-8 col-sm-offset-4">
+                        <input type="submit" value='Search Couples' class="btn btn-success btn-block" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-5">
+
+        <h3 class="box">Found <span class="badge">@Model.ToList().Count</span></h3>
+
+        <section id="pinBoot">
+            @foreach (var item in Model.Where(m => m.MemberMedia.Count > 0))
+            {
+                <article class="white-panel">
+                    <img class="img-responsive" alt="@item.ScreenName" id="@item.ScreenName" src="@item.MemberMedia.FirstOrDefault().path"
+                         data-toggle="tooltip" data-placement="bottom" title="Year Met: @item.YearMet" />
+                    <a class="btn btn-block btn-primary" href="/members/details/@item.ID">@item.ScreenName</a>
+                </article>
+
+            }
+        </section>
+    </div>
+</div>

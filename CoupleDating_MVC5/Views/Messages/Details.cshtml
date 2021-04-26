@@ -1,0 +1,47 @@
+﻿@model CoupleDating_MVC5.Models.Messages
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="box">
+    <h1>Message Detail</h1>
+    <a href="/members/details/@Model.ID">
+        <h2> @Html.DisplayFor(model => model.Member.ScreenName)</h2>
+        <img src="@Model.Member.MemberMedia.FirstOrDefault().path" class="img-rounded" style="max-height:150px;" />
+    </a>
+    <p>Subject:@Html.DisplayFor(model => model.subject) "@Html.Raw(@Model.body)"</p>
+</div>
+
+<div class="box">
+    <h4>Previous...</h4>
+    @if (ViewBag.PreviousMessages != null)
+    {
+        foreach (CoupleDating_MVC5.Models.Messages x in ViewBag.PreviousMessages)
+        {
+            <div class="well well-small">
+                <h2>@x.Member.ScreenName</h2>
+                <p>Subject:@x.subject: "@x.body"</p>
+            </div>
+        }
+    }
+</div>
+
+<p class="box">
+    @Html.ActionLink("Back to List", "Index")
+    <input id="send" type="button" class="btn btn-primary btn-sm" value="Reply">
+</p>
+
+<div id="newMessage">
+    @{Html.RenderAction("New", "Messages", new { });}
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        jQuery("#newMessage").hide();
+
+        jQuery("#send").click(function () {
+            jQuery("#newMessage").show('2000');
+        });
+    </script>
+}

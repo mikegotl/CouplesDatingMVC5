@@ -1,0 +1,74 @@
+﻿@model CoupleDating_MVC5.Models.DoubleDateRequest
+@using CoupleDating_MVC5.Models
+@using CoupleDating_MVC5.Controllers
+
+@{
+    ViewBag.Title = "DDRequest";
+}
+<div class="well">
+    <h2>Double-Date Request</h2>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="well">
+            <h3>1 - Pick Date & Time</h3>
+            @Html.EditorFor(model => model.RequestDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.RequestDate, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="well">
+            <h3>2 - Pick Place(s) for the Date</h3>
+            @*<div class="panel">
+                <div class="panel-body">
+                    @{
+
+                        System.Collections.Generic.List<FavPl_GPlace> places = ViewBag.FavPl_GPlaces;
+                        if (places != null)
+                        {
+                            foreach (FavPl_GPlace place in places)
+                            {
+
+                                <div class="thumbnail col-lg-2 col-md-2 col-sm-4 col-xs-12" style="height:180px;">
+                                    <input type="checkbox" name="places-@place.GPlaceID" id="place@item.PlaceID" class="checkbox">
+                                    <a>
+                                        <img src="@place.GPhotoUrl" style="max-height:150px;" />
+                                    </a>
+                                </div>
+                            }
+                        }
+
+                    }
+
+                    <div class="thumbnail col-lg-2 col-md-2 col-sm-4 col-xs-12 text-center">
+                        - or -    <label class="control-label">Enter your own place</label>
+                        <input type="text" id="extPlace" value="" class="form-control" />
+                    </div>
+                </div>
+            </div>*@
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="well">
+            <h3>3 - Something they need to know about the date</h3><textarea class="form-control" id="Memo" name="Memo" rows="10"></textarea>
+            <input type="submit" value="Create the Date!" class="btn btn-primary btn-block" />
+        </div>
+    </div>
+                        }
+<div class="clearfix"></div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script type="text/javascript">
+
+
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<div class="clearfix"></div>

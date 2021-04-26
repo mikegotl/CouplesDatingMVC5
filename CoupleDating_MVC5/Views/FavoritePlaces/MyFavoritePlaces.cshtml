@@ -1,0 +1,56 @@
+﻿@model IEnumerable<CoupleDating_MVC5.Models.FavoritePlaces>
+@using CoupleDating_MVC5.Models
+@using CoupleDating_MVC5.Controllers
+
+@{
+    ViewBag.Title = "MyFavoritePlaces";
+}
+<h2 class="box">Our Favorite Places</h2>
+
+<section id="pinBoot">
+    @{
+
+        foreach (var item in Model)
+        {
+            List<GPlace> gPlaces = ViewBag.gPlaces;
+
+            if (item.GPlace_Id != null && item.GPlace_Id.ToString() != "0")
+            {
+                var href = "/places/details/" + item.GPlace_Id;
+                List<GPlace> q = (from qq in gPlaces where qq.place_id == item.GPlace_Id select qq).ToList();
+
+                if (q.Count() > 0 && q != null)
+                {
+                    GPlace gp = q.FirstOrDefault();
+                    string _photo = "";
+
+                    if (gp.photoUrls != null && gp.photoUrls.Count() > 0)
+                    {
+                        _photo = gp.photoUrls.FirstOrDefault().photoUrl;
+
+                    }
+
+                    <article class="box white-panel">
+                        <a href=@href>
+                            <small>@gp.name</small>
+                        </a>
+
+                        <img src="@_photo" class="img-responsive" />
+                        <p>
+
+                            @*//ADDRESS*@
+                            @gp.formattedAddress
+                        </p>
+
+                        <button class="btn btn-warning btn-block" onclick="javascript:window.location=('@Url.Action("DeleteMyFav", "FavoritePlaces", new { id = item.FavoritePlaceID })')">
+                            Remove
+                        </button>
+                    </article>
+
+                }
+            }
+        }
+    }
+</section>
+
+<div class="clearfix"></div>

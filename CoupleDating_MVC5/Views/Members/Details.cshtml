@@ -1,0 +1,132 @@
+﻿@model CoupleDating_MVC5.Models.Member
+@using CoupleDating_MVC5.Models
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<hr />
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class=" box thumbnail">
+            <div class="caption">
+                Last Viewed: @DateTime.Now.ToString("T")
+                @{
+                    var age1 = "(" + Convert.ToString(DateTime.Now.Year - Model.DOB1.Value.Year) + ")";
+                    var age2 = "(" + Convert.ToString(DateTime.Now.Year - Model.DOB2.Value.Year) + ")";
+                }
+                <h1>
+                    @Html.DisplayFor(model => model.ScreenName)
+                    <small>@Html.DisplayFor(model => model.FirstName1) @age1 & @Html.DisplayFor(model => model.FirstName2) @age2</small>
+                </h1>
+                <p>Year Met: <span class="badge">@Html.DisplayFor(model => model.YearMet)</span></p>
+                <p>City/State: <span class="badge">@Html.DisplayFor(model => model.City), @Html.DisplayFor(model => model.State)</span></p>
+                <p>Status: <span class="badge badge-success">@Html.DisplayFor(model => model.MemberStatus.Description)</span> </p>
+                <h3>Interests:</h3>
+                @{
+                    foreach (CoupleDating_MVC5.Models.MemberInterest interest in Model.MemberInterest)
+                    {
+                        <span class="label label-default">@interest.Interest.Name</span>
+                    }
+                }
+                <h3>Survey Answers</h3>
+                @{
+                    foreach (QuestionAnswers a in Model.QuestionAnswers)
+                    {
+                        
+                    }
+                }
+                <hr />
+                <p>
+                    <a href="/" class="btn btn-primary" role="button">Back</a>
+                    @{
+                        //Add to Favorite Couples
+                        CoupleDating_MVC5.Controllers.Config config = new CoupleDating_MVC5.Controllers.Config();
+                        long loggedID = config.LoggedInMember.ID;
+
+                        if (loggedID != Model.ID)
+                        {
+                            var foundFC = Model.Favorites.Where(c => c.FavoriteMemberID == Model.ID && c.MemberID == loggedID).FirstOrDefault();
+
+                            if (foundFC != null)
+                            {
+                                <button class="btn btn-warning" onclick="javascript:window.location=('@Url.Action("Remove", "Favorites", new { favoriteMemberID = @Model.ID})')">
+                                    Remove from Favorites
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-success" onclick="javascript:window.location=('@Url.Action("Add", "Favorites", new { favoriteMemberID = @Model.ID})')">
+                                    Add to Favorites
+                                </button>
+                            }
+
+                            //Friend Request
+                            var existingFr = Model.Friends.Where(f => f.Member1ID == Model.ID || f.Member2ID == Model.ID).FirstOrDefault();
+
+                            if (existingFr == null)
+                            {
+                                <button class="btn btn-primary" onclick="javascript:window.location=('@Url.Action("AddFriendRequest", "Friends", new { friendID = @Model.ID})')">
+                                    Send Friend Request
+                                </button>
+                            }
+                            else
+                            {
+                                //already sent friend request
+                                if (existingFr.Accepted == true)
+                                {
+                                    //accepted
+                                    <button class="btn btn-warning" onclick="javascript:window.location=('@Url.Action("Unfriend", "Friends", new { friendID = @Model.ID})')">
+                                        Unfriend
+                                    </button>
+                                }
+                                else
+                                {
+                                    //not yet accepted
+                                    if (existingFr.Accepted == null)
+                                    {
+                                        <button class="btn btn-success" disabled="disabled">
+                                            Friend Request Sent
+                                        </button>
+                                    }
+                                }
+                            }
+
+                            <button class="btn btn-success" onclick="javascript:window.location=('/DoubleDateRequests/DDRequest/@Model.ID')">
+                                Send Date Request
+                            </button>
+
+                            <input id="send" type="button" class="btn btn-primary btn-sm" value="Send the couple a message">
+                            <div id="newMessage" style="display:none">
+                                @{Html.RenderAction("New", "Messages", new { });}
+                            </div>
+
+                                    }
+
+                    }
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <section id="pinBoot">
+            @foreach (var i in Model.MemberMedia)
+            {
+                var href = "/members/details/" + Model.ID + "?img=" + i.ID;
+                <article class="white-panel">
+                    <img src="@i.path" class="img-responsive" />
+                </article>
+
+            }
+        </section>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        jQuery("#send").click(function () {
+            jQuery("#newMessage").show('2000');
+        });
+    </script>
+}

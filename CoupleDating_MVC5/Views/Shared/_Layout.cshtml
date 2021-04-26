@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Couples Dating Scene</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light|Oswald' rel='stylesheet' type='text/css'>
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link href="~/Content/Site.css" rel="stylesheet" />
+
+    @{
+        string theme = "";
+
+        if (Request.QueryString["theme"] != null)
+        {
+            //Page has querystring, set theme
+            theme = Request.QueryString["theme"];
+        }
+        else
+        {
+            //no querystring, check session object
+            if (Session["theme"] != null)
+            {
+                theme = (string)Session["theme"];
+            }
+            else
+            {
+                //no qs and no session object
+                <link href="~/Content/bootstrap-theme_darkly.min.css" rel="stylesheet" />
+            }
+        }
+
+        switch (theme)
+        {
+            case "Slate":
+                <link href="~/Content/bootstrap-theme_slate.min.css" rel="stylesheet" />
+                break;
+            case "Cosmo":
+                <link href="~/Content/bootstrap-theme_Cosmo.min.css" rel="stylesheet" />
+                break;
+            case "Cerulean":
+                <link href="~/Content/bootstrap-theme_cerulean.min.css" rel="stylesheet" />
+                break;
+            case "Darkly":
+                <link href="~/Content/bootstrap-theme_darkly.min.css" rel="stylesheet" />
+                break;
+            case "Amelia":
+                <link href="~/Content/bootstrap.amelia.min.css" rel="stylesheet" />
+                break;
+            case "Cyborg":
+                <link href="~/Content/bootstrap-theme_cyborg.min.css" rel="stylesheet" />
+                break;
+            case "Standard":
+                <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+                break;
+            default:
+                <link href="~/Content/bootstrap-theme_darkly.min.css" rel="stylesheet" />
+                break;
+        }
+
+        Session["theme"] = theme;
+    }
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body style="height:100%;">
+    <div style="background-image:url(/Content/images/KK_TopBanner.png); height:50px;"></div>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="~/">CDS</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    @*THEME Menu Item*@
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>THEMES</li>
+                            <li><a href="?theme=Standard">Standard</a></li>
+                            <li><a href="?theme=Cosmo">Cosmo</a></li>
+                            <li><a href="?theme=Slate">Slate</a></li>
+                            <li><a href="?theme=Cerulean">Cerulean</a></li>
+                            <li><a href="?theme=Darkly">Darkly</a></li>
+                            <li><a href="?theme=Amelia">Amelia</a></li>
+                            <li><a href="?theme=Cyborg">Cyborg</a></li>
+                            <li class="divider"></li>
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Member Screens <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Mailbox", "Index", "Messages")</li>
+                            <li>@Html.ActionLink("Matching Couples", "Index", "Members")</li>
+                            <li>@Html.ActionLink("Favorite Couples", "MyFavoriteCouples", "Favorites")</li>
+                            <li>@Html.ActionLink("Favorite Places", "MyFavoritePlaces", "FavoritePlaces")</li>
+                            <li>@Html.ActionLink("Profile", "Edit", "Members")</li>
+
+                            <li>@Html.ActionLink("Your Survey", "Index", "Questions")</li>
+                        </ul>
+                    </li>
+                    <li>@Html.ActionLink("Search Community", "Search", "Members")</li>
+                </ul>
+                @*<form class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search Couples">
+                        </div>
+                        <button type="submit" class="btn btn-default">Search</button>
+                        <a href="#"> or Advanced Search</a>
+                    </form>*@
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid body-content">
+        @RenderBody()
+        @*<div class="col-md-3">
+                <div class="box panel panel-warning">
+                    <div class="panel-heading">Tour Guide</div>
+                    <div class="panel-body">
+                        <div class="btn-group-vertical btn-block" role="group" aria-label="...">
+                            <div class="thumbnail">
+                                <div class="caption">
+                                    @using (Html.BeginForm("CouplesSearchAdvanced", "Members"))
+                                    {
+                                        <h3>Search couples in your area</h3>
+                                        <small>between ages:</small>
+                                        <span id="SliderVal1">30,65</span>
+                                        <br />
+                                        <input id="ex2" type="text" name="sliderValue" class="span2" style="width:100%;" value="" data-slider-min="21" data-slider-max="85" data-slider-step="1" data-slider-value="[30,65]" />
+                                        <br />
+                                        <input type="submit" value='Search Couples' class="btn btn-success btn-block" />
+                                    }
+                                </div>
+                            </div>
+                            <a href="~/FavoritePlaces/MyFavoritePlaces" class="btn btn-primary">Favorite Places</a>
+                            <a href="~/Favorites/MyFavoriteCouples" class="btn btn-success">Favorite Couples</a>
+                            <a class="btn btn-info" href="/Articles">Articles/Blogs</a>
+                            <button class="btn btn-warning">Speed Dating <span class="badge">TBA</span> </button>
+                            <button class="btn btn-danger">Video Chat <span class="badge">Coming Soon!</span> </button>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        <hr />
+        <footer>
+            <p class="">&copy; @DateTime.Now.Year - Couples Dating Scene.com</p>
+        </footer>
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin:auto; width:75%;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js"></script>
+
+    <script src="~/Scripts/PinterestStyle.js"></script>
+    <script src="~/Scripts/Site.js"></script>
+    <script>
+        RenderMostRecentCouples(10);
+    </script>
+</body>
+</html>

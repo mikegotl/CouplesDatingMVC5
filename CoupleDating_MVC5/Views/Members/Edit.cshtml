@@ -1,0 +1,237 @@
+﻿@model CoupleDating_MVC5.Models.Member
+@using CoupleDating_MVC5.Models
+
+@{
+    ViewBag.Title = "Edit";
+    CoupleDating_MVC5.Controllers.Config config = new CoupleDating_MVC5.Controllers.Config();
+}
+
+@using (Html.BeginForm("Edit", "Members", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.DateCreated)
+    <div class="row">
+        <div class="col-lg-12 box">
+            <h2>Edit <small>Profile</small></h2>
+            <h4>Make changes below then save</h4>
+        </div>
+    </div>
+
+    <div class="row well">
+        <h4>Click on pic to assign as main profile pic</h4>
+        <p>@ViewBag.result</p>
+        @{
+            if (Model != null)
+            {
+                if (Model.MemberMedia != null && Model.MemberMedia.Count > 0)
+                {
+                    foreach (var pic in Model.MemberMedia.ToList().OrderByDescending(x => x.primary))
+                    {
+                        <div class="thumbnail col-lg-2 col-md-3 col-sm-4 col-xs-6" style="margin-right:10px;">
+                            @if (pic.primary == true)
+                            {
+                                <input type="button" value="Primary" class="btn btn-primary btn-block" disabled="disabled" />
+                                <a href="#"><img src="@pic.path.Replace("~","")" style="height:112px;" onclick="javascript: window.location = ('@Url.Action("AssignPrimary", "MemberMedias", new { id = pic.ID })')" /></a>
+                            }
+                            else
+                            {
+                                <a href="#"><img src="@pic.path.Replace("~","")" style="height:150px;" onclick="javascript: window.location = ('@Url.Action("AssignPrimary", "MemberMedias", new { id = pic.ID})')" /></a>
+                            }
+
+                            <input type="button" class="btn btn-warning btn-block" onclick="javascript: window.location = ('@Url.Action("DeleteMyProfPic", "MemberMedias", new { id = pic.ID })')" value="Remove" />
+                        </div>
+                    }
+                }
+            }
+        }
+        <label for="file">Upload Image:</label>
+        <input class="btn btn-default" type="file" name="file" id="file" /><br><br>
+        <input class="btn btn-default" type="submit" value="Upload Image" />
+        <br><br>
+        @ViewBag.Message
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Your Information</h2>
+            <div class="col-md-6 box">
+                <div class="form-horizontal">
+                    <div class="form-group-sm">
+                        @Html.LabelFor(model => model.ScreenName, "Screen Name", htmlAttributes: new { @class = "control-label col-md-3" })
+                        @Html.EditorFor(model => model.ScreenName, new { htmlAttributes = new { @class = "form-control " } })
+                        @Html.ValidationMessageFor(model => model.ScreenName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group-sm">
+                        @Html.LabelFor(model => model.Tagline, "Tagline", htmlAttributes: new { @class = "control-label col-md-3" })
+                        @Html.EditorFor(model => model.Tagline, new { htmlAttributes = new { @class = "form-control " } })
+                        @Html.ValidationMessageFor(model => model.Tagline, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group-sm">
+                        @Html.LabelFor(model => model.YearMet, "Year Met", htmlAttributes: new { @class = "control-label col-md-3" })
+                        @{
+                            HelperModels hm = new HelperModels();
+                            if (Model != null)
+                            {
+                        @Html.DropDownListFor(model => model.YearMet, new SelectList(hm.GetAllYears(1920), "Key", "Value", Model.YearMet), htmlAttributes: new { @class = "form-control" })
+                            }
+                            else
+                            {
+                        @Html.DropDownListFor(model => model.YearMet, new SelectList(hm.GetAllYears(1920), "Key", "Value"), htmlAttributes: new { @class = "form-control" })
+                            }
+                        }
+                        @Html.ValidationMessageFor(model => model.YearMet, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 box">
+                <div class="form-horizontal">
+                    <div class="form-group-sm">
+                        @Html.LabelFor(model => model.OurStory, "Our Story", htmlAttributes: new { @class = "control-label col-md-3" })
+                        @Html.TextAreaFor(model => model.OurStory, 5, 60, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.OurStory, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6 box">
+            <div class="form-horizontal ">
+                <h2 class="text-center">First Person</h2>
+                <div class="form-group-sm">
+                    @Html.LabelFor(model => model.FirstName1, "First Name", htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.EditorFor(model => model.FirstName1, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FirstName1, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group-sm">
+                    @Html.LabelFor(model => model.LastName1, "Last Name", htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.EditorFor(model => model.LastName1, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.LastName1, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group-sm">
+                    @Html.LabelFor(model => model.Gender1, "Gender", htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.RadioButtonFor(m => m.Gender1, "M")Male<br />
+                    @Html.RadioButtonFor(m => m.Gender1, "F")Female
+                    @Html.ValidationMessageFor(model => model.Gender1, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group-sm">
+                    @Html.LabelFor(model => model.DOB1, "Date of Birth", htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.EditorFor(model => model.DOB1, new { PreviousYearCount = 80, NextYearCount = 0, htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DOB1, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 box">
+            <div class="form-horizontal">
+                <h2 class="text-center">Second Person</h2>
+                <div class="form-group-sm">
+                    @Html.LabelFor(model => model.FirstName2, "First Name", htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.EditorFor(model => model.FirstName2, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FirstName2, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group-sm">
+                    @Html.LabelFor(model => model.LastName2, "Last Name", htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.EditorFor(model => model.LastName2, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.LastName2, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group-sm">
+                    @Html.LabelFor(model => model.Gender2, "Gender", htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.RadioButtonFor(m => m.Gender2, "M", new { htmlAttributes = new { @class = "form-control radio" } })Male<br />
+                    @Html.RadioButtonFor(m => m.Gender2, "F", new { htmlAttributes = new { @class = "form-control radio" } })Female
+                    @Html.ValidationMessageFor(model => model.Gender2, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group-sm">
+                    @Html.LabelFor(model => model.DOB2, "Date of Birth", htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.EditorFor(model => model.DOB2, new { PreviousYearCount = 80, NextYearCount = 0, htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DOB2, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12 box">
+            <h2>Address Information</h2>
+            <div class="form-horizontal">
+                <div class="form-group-sm">
+                    @Html.LabelFor(model => model.Address, "Street and Number", htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group-sm">
+                    @Html.LabelFor(model => model.City, "City", htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group-sm">
+                    @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="form-group">
+                        @Html.DropDownListFor(x => x.State, config.States, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group-sm">
+                    @Html.LabelFor(model => model.Zipcode, htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.EditorFor(model => model.Zipcode, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Zipcode, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group-sm">
+                    @Html.LabelFor(model => model.StatusID, "Status", htmlAttributes: new { @class = "control-label col-md-3" })
+                    @*@Html.DropDownListFor(m=>m.StatusID, new SelectList(ViewBag.StatusID as IEnumerable<SelectListItem>, "ID", "Description"))*@
+                    @Html.DropDownList("StatusID",null, htmlAttributes: new { @class = "form-control" })
+
+
+                    @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+        <div class="row" id="Interests">
+            <div class="box col-md-12">
+                <h2>Interests</h2>
+                @{
+                    DBEntities db = new DBEntities();
+                    List<Interest> AllInterests = db.Interest.ToList<Interest>();
+                    foreach (Interest interest in AllInterests)
+                    {
+                        string interestName = interest.Name;
+                        int interestID = interest.ID;
+
+                        bool isChecked = false;
+                        string _checked = "";
+
+                        isChecked = Model.MemberInterest.Any(m => m.MemberID == config.LoggedInMember.ID && m.InterestID == interest.ID);
+                        if (isChecked) { _checked = "checked"; }
+                        <input type="checkbox" name="interests" value="@interestID"
+                               id="interest@interestID"
+                               data-toggle="toggle"
+                               data-on="@interestName" data-off="@interestName"
+                               data-size="small" data-offstyle="warning"
+                               @_checked />
+                    }
+                }
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="box form-group-sm">
+                <input type="submit" value="Save" class="btn btn-block" />
+            </div>
+        </div>
+                    }
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

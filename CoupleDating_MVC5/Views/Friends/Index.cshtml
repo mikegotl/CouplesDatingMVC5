@@ -1,0 +1,47 @@
+﻿@model IEnumerable<CoupleDating_MVC5.Models.Friends>
+
+@{
+    ViewBag.Title = "View";
+}
+
+<div class="container">
+    <h3>Our Friends</h3>
+
+    @foreach (CoupleDating_MVC5.Models.Friends item in Model)
+    {
+        <div class="col-lg-2">
+
+            @{
+        try
+        {
+            long ourID = CoupleDating_MVC5.Controllers.Config.LoggedInMember.ID;
+            string imgPath = "";
+            string screenName = "";
+            long targetID = 0;
+
+            if (item.member1ID == ourID)
+            {
+                imgPath = item.Member1.MemberMedia.FirstOrDefault().path;
+                screenName = item.Member1.ScreenName;
+                targetID = item.Member1.ID;
+            }
+            else
+            {
+                imgPath = item.Member.MemberMedia.FirstOrDefault().path;
+                screenName = item.Member.ScreenName;
+                targetID = item.Member.ID;
+            }
+
+            <a href="/members/details/@targetID">
+                <span><img src="@imgPath" style="height:136px;" /></span>
+                <br />@screenName
+            </a>
+        }
+        catch (Exception)
+        {
+
+        }
+            }
+        </div>
+    }
+</div>

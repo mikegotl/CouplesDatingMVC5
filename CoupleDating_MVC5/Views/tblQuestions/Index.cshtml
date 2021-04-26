@@ -1,0 +1,115 @@
+﻿@model IEnumerable<CoupleDating_MVC5.Models.Questions>
+@using CoupleDating_MVC5.Models;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="col-md-12 box">
+    <h2>Your Survey <small>The more questions you answer the better we can match you to your new friends.</small></h2>
+    @using (Html.BeginForm())
+    {
+        <table class="table table-hover table-responsive">
+            <tr>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Question
+                </th>
+                <th>
+                    Choices
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.questionID)
+                        @Html.DisplayFor(modelItem => item.questionName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.questionFull)
+                    </td>
+                    <td>
+                        @if (item.QuestionCategory.questionCategoryName == "Definitive")
+                        {
+                            //render list of checkboxes
+                            foreach (var i in item.QuestionChoices)
+                            {
+                                var c = i.questionChoiceFull.ToString();
+                                var cID = i.questionChoiceID;
+
+                                //see if checked in db for member
+                                var isChecked = false;
+                                var _checked = "";
+
+                                List<QuestionAnswers> r = ViewBag.choiceIdSelected;
+
+                                var rSelections = (from qq in r where qq.questionChoiceID == cID select qq);
+
+                                if (rSelections != null)
+                                {
+                                    var rID = rSelections.FirstOrDefault();
+                                    if (rID != null) { isChecked = true; }
+                                }
+
+                                if (isChecked) { _checked = "checked"; }
+
+                                <input type="checkbox"
+                                       name="choices" value="@cID"
+                                       id="choice@cID"
+                                       data-toggle="toggle"
+                                       data-on="@c"
+                                       data-off="@c"
+                                       data-size="small"
+                                       data-offstyle="warning"
+                                       @_checked />
+                            }
+                        }
+                        else
+                        {
+                            //else render dropdownlist
+                            List<SelectListItem> choices = new List<SelectListItem>();
+
+                            foreach (var i in item.QuestionChoices)
+                            {
+                                //see if checked in db for member
+                                var isChecked = false;
+                                var _checked = "";
+
+                                List<QuestionAnswers> r = ViewBag.choiceIdSelected;
+
+                                var rSelections = (from qq in r where qq.questionChoiceID == i.questionChoiceID select qq);
+
+                                if (rSelections != null)
+                                {
+                                    var rID = rSelections.FirstOrDefault();
+                                    if (rID != null) { isChecked = true; }
+                                }
+
+                                //add list items
+                                choices.Add(new SelectListItem
+                                {
+                                    Text = i.questionChoiceFull,
+                                    Value = i.questionChoiceID.ToString(),
+                                    Selected = isChecked
+                                });
+                            }
+
+                            @Html.DropDownListFor(modelItem => item.QuestionChoices, choices, htmlAttributes: new { @class = "form-control" })
+                        }
+                    </td>
+                    @*<td>
+                            @Html.ActionLink("Edit", "Edit", new { id=item.questionID }) |
+                                @Html.ActionLink("Details", "Details", new { id=item.questionID }) |
+                                @Html.ActionLink("Delete", "Delete", new { id=item.questionID })
+                        </td>*@
+                </tr>
+            }
+        </table>
+        <input type="submit" value="Save" class="btn btn-block btn-primary" />
+    }
+</div>

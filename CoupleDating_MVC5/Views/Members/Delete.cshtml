@@ -1,0 +1,135 @@
+﻿@model CoupleDating_MVC5.Models.Member
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Member</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DOB1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DOB1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DOB2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DOB2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.State)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.State)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Zipcode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Zipcode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status.statusDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status.statusDescription)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

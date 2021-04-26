@@ -1,0 +1,120 @@
+﻿@model IEnumerable<CoupleDating_MVC5.Models.Place>
+
+@*<div class="carousel slide" id="myCarousel">
+        <div class="carousel-inner">
+
+            @{
+                int i = 1;
+                foreach (var item in Model)
+                {
+                    //var HomeUrl = item.PlaceLinks.FirstOrDefault().LinkUrl;
+                    if (item.PlaceMedia.Count > 0)
+                    {
+                        var ImgPath = item.PlaceMedia.FirstOrDefault().path;
+
+                        if (i == 1)
+                        {
+                            <div class="item active">
+                                <div class="col-md-4">
+                                    <a href="/places/details/@item.PlaceID">
+                                        <img src="@ImgPath" style="max-height:300px; margin:auto" class="img-responsive">
+                                    </a>
+                                </div>
+                            </div>
+
+                        }
+                        else
+                        {
+                            <div class="item">
+                                <div class="col-md-4">
+                                    <a href="/places/details/@item.PlaceID">
+                                        <img src="@ImgPath" style="max-height:300px; margin:auto" class="img-responsive">
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    }
+                    i += 1;
+                }
+            }
+        </div>
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+    </div>*@
+
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+
+        @{
+            int i = 0;
+            foreach (var item in Model)
+            {
+                //var HomeUrl = item.PlaceLinks.FirstOrDefault().LinkUrl;
+                if (item.PlaceMedia.Count > 0)
+                {
+                    var ImgPath = item.PlaceMedia.FirstOrDefault().path;
+
+                    if (i == 1)
+                    {
+                        <li data-target="#carousel-example-generic" data-slide-to="@i" class="active"></li>
+                    }
+                    else
+                    {
+                        <li data-target="#carousel-example-generic" data-slide-to="@i"></li>
+                    }
+                }
+                i += 1;
+            }
+        }
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner center-block text-center" role="listbox">
+        @{
+            int n = 1;
+            foreach (var item in Model)
+            {
+                //var HomeUrl = item.PlaceLinks.FirstOrDefault().LinkUrl;
+                if (item.PlaceMedia.Count > 0)
+                {
+                    var ImgPath = item.PlaceMedia.FirstOrDefault().path;
+
+                    if (n == 1)
+                    {
+                        <div class="item active" style="max-height:350px;">
+                            <a href="/places/details/@item.PlaceID">
+                                <img src="@ImgPath" style="max-height:350px;margin:auto" alt="...">
+                            </a>
+                            <div class="carousel-caption">
+                                @item.Name
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="item" style="max-height:350px;">
+                            <a href="/places/details/@item.PlaceID">
+                                <img src="@ImgPath" style="max-height:350px; margin:auto" alt="...">
+                            </a>
+                            <div class="carousel-caption">
+                                @item.Name
+                            </div>
+                        </div>
+                    }
+                }
+                n += 1;
+            }
+        }
+    </div>
+
+    <!-- Controls -->
+    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>

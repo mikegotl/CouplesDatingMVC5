@@ -1,0 +1,135 @@
+﻿@model CoupleDating_MVC5.Models.DoubleDateRequest
+@using CoupleDating_MVC5.Models;
+@{
+    DBEntities db = new DBEntities();
+    long LoggedInID = CoupleDating_MVC5.Controllers.Config.LoggedInMember.ID;
+}
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+<h4>Double Date Request</h4>
+@{
+    if (LoggedInID == Model.requestingID)
+    {
+        if (Model.accepted == true)
+        {
+            <h3 class="text-success">Your Request has been Accepted! Have fun!</h3>
+        }
+        else if (Model.accepted == false)
+        {
+
+            <h3 class="text-warning">
+                This requested has been passed on.
+            </h3>
+        }
+        else if (Model.accepted == null)
+        {
+            <h3 class="text-info">
+                Your Request has not been answered yet.
+            </h3>
+        }
+    }
+    else
+    {
+    }
+}
+
+<div class="well col-md-6">
+    <h3>
+        Requesting Member:
+        @{
+            var rMemName = db.Member.Where(m => m.ID == Model.requestingID).FirstOrDefault().ScreenName;
+            var rImgPath = db.MemberMedia.Where(m => m.ID == Model.requestingID).FirstOrDefault().path;
+            <a href="/Members/Details/@Model.requestingID">
+                <b class="text-success">@rMemName</b>
+                <img src="@rImgPath" style="max-height:150px;" />
+            </a>
+        }
+    </h3>
+</div>
+
+<div class="well col-md-6">
+    <h3>Requested Date and Time:</h3>
+    <p><b>@Model.requestDate</b></p>
+</div>
+<div class="clearfix"></div>
+<div class="well col-md-6">
+    <h3>Where:</h3>
+    <div class="panel">
+        <div class="panel-body">
+            @foreach (CoupleDating_MVC5.Models.DoubleDateDetails dd in Model.DoubleDateDetails)
+            {
+                var placeName = db.Place.Where(d => d.PlaceID == dd.placeID).FirstOrDefault().Name;
+                <div class="col-md-6 thumbnail">
+                    <a href="/Places/Details/@dd.placeID">
+                        <p><b>@placeName</b></p>
+                        <img src="@dd.Place.PlaceMedia.FirstOrDefault().path" style="width:100%" class="img-thumbnail" />
+                        <p>@dd.Place.Description</p>
+                        <p>@dd.Place.Blurb</p>
+                        <p>@dd.Place.Address @dd.Place.City</p>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="well clearfix col-md-6">
+    <h3>Additional Message from the couple:</h3>
+    <p><i>"<b>@Model.memo</b>"</i></p>
+</div>
+<div class=" text-center">
+    @{
+
+        if (LoggedInID == Model.requestingID)
+        {
+            if (Model.accepted == true)
+            {
+                <button class="btn btn-success disabled">
+                    Your Request has been Accepted! Have fun!
+                </button>
+            }
+            else if (Model.accepted == false)
+            {
+
+                <button class="btn btn-warning disabled">
+                    This requested has been passed on.
+                </button>
+            }
+            else if (Model.accepted == null)
+            {
+                <button class="btn btn-info disabled">
+                    Your Request has not been answered yet.
+                </button>
+            }
+        }
+        else
+        {
+            if (Model.accepted == true)
+            {
+                <button class="btn btn-success disabled" onclick="javascript:window.location=('@Url.Action("AcceptDate", "DoubleDateRequests", new { ID = @Model.doubleDateRequestID})')">
+                    You have Accepted! Have Fun!
+                </button>
+            }
+            else if (Model.accepted == false)
+            {
+
+                <button class="btn btn-warning disabled" onclick="javascript:window.location=('@Url.Action("DenyDate", "DoubleDateRequests", new { ID = @Model.doubleDateRequestID})')">
+                    You have passed on this request.
+                </button>
+            }
+            else if (Model.accepted == null)
+            {
+                <button class="btn btn-success" onclick="javascript:window.location=('@Url.Action("AcceptDate", "DoubleDateRequests", new { ID = @Model.doubleDateRequestID})')">
+                    Accept Date Request
+                </button> <b> -Or- </b>
+                <button class="btn btn-warning" onclick="javascript:window.location=('@Url.Action("DenyDate", "DoubleDateRequests", new { ID = @Model.doubleDateRequestID})')">
+                    We'll Pass on this one
+                </button>
+            }
+        }
+    }
+</div>
+<hr />
+@Html.ActionLink("Back to Mailbox", "Details", "Messages")

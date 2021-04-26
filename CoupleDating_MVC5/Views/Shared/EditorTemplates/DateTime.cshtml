@@ -1,0 +1,58 @@
+@using CoupleDating_MVC5.Utility
+@model DateTime?
+@{
+    DateTime dt;
+    if (Model.HasValue)
+    {
+        dt = (DateTime)Model;
+    }
+    else
+    {
+        dt = (DateTime)DateTime.Now;
+    }
+
+    if (ViewBag.PreviousYearCount != null)
+    {
+        List<SelectListItem> days = new List<SelectListItem>();
+        for (int i = 1; i <= 31; i++)
+        {
+            days.Add(new SelectListItem() { Text = i.ToString(), Value = i.ToString(), Selected = (i == dt.Day ? true : false) });
+        }
+
+        List<SelectListItem> months = new List<SelectListItem>();
+        for (int i = 1; i <= 12; i++)
+        {
+            months.Add(new SelectListItem() { Text = i.ToString(), Value = i.ToString(), Selected = (i == dt.Month ? true : false) });
+        }
+
+        List<SelectListItem> years = new List<SelectListItem>();
+
+        int prevYearCount = ViewBag.PreviousYearCount;
+        int nextYearCount = ViewBag.NextYearCount;
+
+        for (int i = DateTime.Now.Year - prevYearCount; i <= DateTime.Now.Year - 20; i++)
+        {
+            years.Add(new SelectListItem() { Text = i.ToString(), Value = i.ToString(), Selected = (i == dt.Year ? true : false) });
+        }
+
+        <div class="form-group@(Html.ValidationErrorFor(m => m, " error has-error"))">
+            <br />
+            <div class="col-md-4">
+                @Html.Label("Month")
+                @Html.DropDownList("months", months, new { @class = "form-control" })
+                @Html.Label("Day")
+                @Html.DropDownList("days", days, new { @class = "form-control" })
+                @Html.Label("Year")
+                @Html.DropDownList("years", years, new { @class = "form-control" })
+            </div>
+            @Html.ValidationMessageFor(m => m, null, new { @class = "help-block" })
+        </div>
+    }
+    else
+    {
+        <div class="form-group@(Html.ValidationErrorFor(m => m, " error has-error"))">
+            @Html.TextBoxFor(m => m, new { @Value = dt, @class = "form-control date datetimepicker" })
+            @Html.ValidationMessageFor(m => m, null, new { @class = "help-block" })
+        </div>
+    }
+}

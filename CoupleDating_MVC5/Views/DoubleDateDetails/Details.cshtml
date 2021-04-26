@@ -1,0 +1,81 @@
+﻿@model CoupleDating_MVC5.Models.DoubleDateDetails
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DoubleDateDetails</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.placeSequenceNbr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.placeSequenceNbr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.meetTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.meetTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.externalPlaceName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.externalPlaceName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.externalPlaceAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.externalPlaceAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.memo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.memo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.createDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.createDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DoubleDateRequest.memo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DoubleDateRequest.memo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Place.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Place.Name)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.doubleDateDetailsID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

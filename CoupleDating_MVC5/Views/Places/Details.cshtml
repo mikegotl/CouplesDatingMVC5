@@ -1,0 +1,84 @@
+﻿@model CoupleDating_MVC5.Models.Place
+@using CoupleDating_MVC5.Models
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<hr />
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="thumbnail">
+            <div class="caption">
+                <h3>
+                    @Html.DisplayFor(m => m.Name) <br />
+                    <small>@Html.DisplayFor(m => m.Address)</small>
+                </h3>
+                <p>@Html.DisplayFor(m => m.ContactNumber)</p>
+                <p>
+                    @*//website*@
+                    <a href="@Model.Description" target="_blank">@Model.Description</a>
+                </p>
+                <p class="">
+                    @Html.DisplayFor(m => m.Blurb)
+                </p>
+                <p>
+                    <a href="/" class="btn btn-primary" role="button">Back</a>
+                    @{
+                        //Add to Favorite Places
+                        CoupleDating_MVC5.Controllers.Config config = new CoupleDating_MVC5.Controllers.Config();
+                        long loggedID = config.LoggedInMember.ID;
+
+                        DBEntities db = new DBEntities();
+
+                        var foundFP = db.FavoritePlaces.Where(f => f.GPlace_Id == Model.GPlace_Id && f.ID == loggedID).FirstOrDefault();
+
+                        if (foundFP != null)
+                        {
+                            <button class="btn btn-warning" onclick="javascript:window.location=('@Url.Action("Remove", "FavoritePlaces", new { PlaceID = @Model.GPlace_Id , ID = loggedID })')">
+                                Remove from Favorites
+                            </button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-success" onclick="javascript:window.location=('@Url.Action("Add", "FavoritePlaces", new { PlaceID = @Model.GPlace_Id})')">
+                                Add to Favorites
+                            </button>
+                        }
+                    }
+                </p>
+            </div>
+            @*@{
+                    var firstImgPath = "";
+                    var qs = Request.QueryString["img"];
+
+                    if (!String.IsNullOrEmpty(qs))
+                    {
+                        var qsImgID = Convert.ToInt16(qs.ToString());
+                        firstImgPath = Model.PlaceMedia.Where(m => m.PlaceMediaID == qsImgID).FirstOrDefault().path;
+                    }
+                    else
+                    {
+                        firstImgPath = Model.PlaceMedia.FirstOrDefault().path;
+                    }
+
+                    <img src="@firstImgPath" style="margin:auto; width:100%" />
+                }*@
+        </div>
+    </div>
+</div>
+
+<section id="pinBoot">
+
+    @foreach (var i in Model.PlaceMedia)
+    {
+        var href = "/places/details/" + Model.GPlace_Id + "?img=" + i.PlaceMediaID;
+
+        <article class="box white-panel">
+            <img src="@i.path" class="img-responsive " />
+        </article>
+
+    }
+</section>
+<div class="clearfix"></div>

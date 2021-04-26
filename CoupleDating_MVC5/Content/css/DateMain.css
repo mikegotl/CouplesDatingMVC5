@@ -1,0 +1,167 @@
+﻿#background
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 1000px;
+}
+
+.background_behind1
+{
+    background-image: url('images/winter-city-backgrounds.jpg');
+    background-repeat: no-repeat;
+    background-position: left top;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 1000px;
+    z-index: -60000;
+}
+
+.background_behind2
+{
+    background-image: url('images/island-city.jpg');
+    background-repeat: no-repeat;
+    background-position: left top;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 1000px;
+    z-index: -60000;
+}
+
+.background1
+{
+    background-position: left top;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 1000px;
+    z-index: -50000;
+    background-image: url('images/photodune-3368075-two-couple-doing-a-piggy-back-ride-race-l.jpg');
+    background-repeat: no-repeat;
+}
+
+.background2
+{
+    background-position: left top;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 1000px;
+    z-index: -50000;
+    background-image: url('images/photodune-3368075-two-couple-doing-a-piggy-back-ride-race-l_BACKGROUND_REMOVED.png');
+    background-repeat: no-repeat;
+}
+
+#middle
+{
+    position: absolute;
+    top: 200px;
+    left: 150px;
+    width: 450px;
+    background-color: #FFFFFF;
+    padding: 10px 10px 20px 10px;
+    text-align: center;
+}
+
+#girl1
+{ 
+    position: absolute;
+    top: 200px;
+    left: 550px;
+    width: 350px;
+    height: 400px;
+    z-index: -100;
+}
+#girl1Bubble
+{
+    position: absolute;
+    top: 54px;
+    left: 782px;
+    z-index: -500;
+    height: 217px;
+}
+
+#girl1BubbleText
+{
+    position: relative;
+    left: 64px;
+    z-index: -50;
+    top: -207px;
+    width: 196px;
+    height: 73px;
+}
+#girl2
+{
+    position: absolute;
+    top: 250px;
+    left: 1400px;
+    width: 250px;
+    height: 300px;
+    z-index: -100;
+}
+#girl2Bubble
+{
+    position: absolute;
+    top: 115px;
+    left: 1523px;
+    z-index: -500;
+    height: 217px;
+}
+
+#girl2BubbleText
+{
+    position: relative;
+    left: 64px;
+    z-index: -50;
+    top: -191px;
+    width: 196px;
+    height: 73px;
+}
+#manLeft
+{
+    position: absolute;
+    top: 550px;
+    left: 350px;
+    width: 400px;
+    height: 350px;
+    z-index: -150;
+}
+#manRight
+{
+    position: absolute;
+    top: 500px;
+    left: 1300px;
+    width: 200px;
+    height: 400px;
+    z-index: -100;
+}
+
+h1, h2,h3, p
+{
+	font-family: 'Arial Narrow';
+	text-transform: capitalize;
+}
+
+p{font-size:x-large;}
+a
+{
+	text-decoration: none;
+	color: #008080;
+}
+.restaurant
+{
+	margin: 5px;
+	padding: 5px;
+	border: thin solid #008080;
+	width: 350px;
+	height: 200px;
+	float: left;
+	text-align: center;
+}

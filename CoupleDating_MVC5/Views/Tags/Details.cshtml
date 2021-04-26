@@ -1,0 +1,33 @@
+﻿@model CoupleDating_MVC5.Models.Tag
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Tag</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TagType.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TagType.name)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.tagID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,54 @@
+﻿/*from business casual */
+
+.navbar-nav {
+    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: 3px;
+    font-size: 1.25em;
+}
+
+.navbar-header {
+}
+
+.navbar {
+    min-height: 0;
+}
+
+.navbar-default {
+    border: 2px;
+    background: #fff;
+    background: rgba(255,255,255,0.9);
+}
+
+.nav > li > a {
+    padding: 20px;
+}
+
+.navbar-nav > li > a {
+    line-height: normal;
+}
+
+.well {
+    font-weight: 400;
+    letter-spacing: 3px;
+    border: 2px;
+    background: #fff;
+    background: rgba(255,255,255,0.9);
+    font-size: 1.25em;
+}
+
+.box {
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 30px 15px;
+    background: #fff;
+    background: rgba(255,255,255,0.9);
+}
+
+@media screen and (min-width:1200px) {
+    .box:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+}

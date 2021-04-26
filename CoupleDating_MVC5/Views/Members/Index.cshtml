@@ -1,0 +1,63 @@
+﻿@model IEnumerable<CoupleDating_MVC5.Models.Member>
+@using CoupleDating_MVC5.Models
+@{
+    ViewBag.Title = "Index";
+}
+
+<div id="content" class="">
+    <div class="box">
+        <h2>List of couples in your area</h2>
+    </div>
+
+    @foreach (var item in Model)
+    {
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="box">
+                <a href="/members/details/@item.ID">
+                    @{
+
+        var imgPath = "";
+
+        var mm = item.MemberMedia;
+
+        if (mm != null)
+        {
+            var Primary = mm.Where(p => p.primary == true).ToList<MemberMedia>();
+
+            if (Primary.Count > 0)
+            {
+                imgPath = Primary.FirstOrDefault().path.ToString();
+            }
+            else
+            {
+                if (mm.Count > 0)
+                {
+                    if (mm.Where(p => p.path != null) != null)
+                    {
+                        imgPath = mm.Where(p => p.path != null).FirstOrDefault().path.ToString();
+                    }
+                }
+
+            }
+        }
+
+        <img src="@imgPath" data-src="holder.js/300x300" style="max-height:150px;" class="img-circle" />
+
+                    }
+                </a>
+                <div class="caption">
+                    <h3>
+                        <a href="/members/details/@item.ID">
+                            <p>@Html.DisplayFor(modelItem => item.ScreenName)</p>
+                        </a>
+                    </h3>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.Status.statusDescription)
+                        - Together since @Html.DisplayFor(modelItem => item.YearMet)
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="clearfix"></div>
